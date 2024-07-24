@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KelasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+
+Route::get('/', [KelasController::class, 'index'])->name('index');
+
+Route::post('/insertdata', [KelasController::class, 'insertdata'])->name('insertdata');
+
+Route::get('/tampildata/{id}', [KelasController::class, 'tampildata'])->name('tampildata');
+Route::post('/updatedata/{id}', [KelasController::class, 'updatedata'])->name('updatedata');
