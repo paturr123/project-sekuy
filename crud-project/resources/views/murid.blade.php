@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <head>
           <title>CRUD</title>
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">          
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
           <style>
             .kiribar{
               height: 100%;       
               margin-left: 0%;                        
               z-index: 1;
               display: block;
-              animation-delay: 1s;                        
-            }       
+              animation-delay: 1s;
+            }
 
             .tumbul{
               width: 220px;
@@ -19,8 +19,8 @@
             .tumbul:hover{              
               background: linear-gradient(to right, #8d68c5, #e34494);
               width: 180px
-            }            
-
+            }
+            
             .logbot{
               background: linear-gradient(to right, #8d68c5, #e34494);
               width: 100px;
@@ -32,43 +32,7 @@
               width: 120px;                  
             }
 
-            .animas{
-                margin-top: 10px;
-                margin-left: 400px;
-                width: 20px;
-                height: 20px;
-                background-color: coral;
-                -webkit-animation: squareToCircle 2s 1s infinite alternate;              
-            }
-              @-webkit-keyframes squareToCircle {
-                  0% {
-                    border-radius: 0 0 0 0;
-                    background: coral;
-                    transform: rotate(0deg);
-                  }
-                  25% {
-                    border-radius: 50% 0 0 0;
-                    background: darksalmon;
-                    transform: rotate(45deg);
-                  }
-                  50% {
-                    border-radius: 50% 50% 0 0;
-                    background: indianred;
-                    transform: rotate(90deg);
-                  }
-                  75% {
-                    border-radius: 50% 50% 50% 0;
-                    background: lightcoral;
-                    transform: rotate(135deg);
-                  }
-                  100% {
-                    border-radius: 50% 50% 50% 50%;
-                    background: darksalmon;
-                    transform: rotate(180deg);
-                  }
-              }
-
-              .utama{
+            .utama{
                 margin-top: 80px;
               }
           </style>
@@ -80,7 +44,7 @@
               <div class="row align-items-start">
                 <div class="col-2">
                         
-                  {{-- side bar --}}                
+                  {{-- side bar --}}
                   <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark" style="width: 290px; outline:1px solid rgb(255, 255, 255);">
                   <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg class="bi me-5" width="10" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -88,21 +52,20 @@
                     <span class="utama fs-3 fw-bold text-primary">  UTAMA|</span>
                   </a>                  
 
-                  <hr class="bg-white mt-10" style="height: 3px;">                                
+                  <hr class="bg-white mt-10" style="height: 3px;">                    
                   <ul class="nav flex-column mb-auto">
-                    <li class="tumbul nav-item mt-4" style="margin-left: 20px; outline:1px solid rgb(255, 255, 255); border-radius: 1rem;">
-                      <a href="/" class="butkir nav-link link-light" aria-current="page" type="button">
-                      <svg class="bi me-2 " width="16" height="16"><use xlink:href="#home"></use></svg>
-                          Kelas         
-                          <div class="spinner-grow spinner-grow-sm text-primary"></div>         
-                      </a>
-                    </li>
+                  <li class="tumbul nav-item mt-4" style="margin-left: 20px; outline:1px solid rgb(255, 255, 255); border-radius: 1rem;">
+                    <a href="/" class="nav-link link-light" aria-current="page" type="button">
+                    <svg class="bi me-2 " width="16" height="16"><use xlink:href="#home"></use></svg>
+                        Kelas                        
+                    </a>
+                  </li>
 
                   <li class="tumbul nav-item mt-4" style="margin-left: 20px; outline:1px solid rgb(255, 255, 255); border-radius: 1rem;">
                     <a href="/murid" class="nav-link link-light">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-                      <i class="fas fa-cloud"></i>
                         Murid
+                        <div class="spinner-grow spinner-grow-sm text-danger"></div>
                     </a>
                   </li>
 
@@ -142,11 +105,11 @@
 
                   {{-- navbar --}}                  
                   <div class="flex-column flex-shrink-0 p-3 bg-dark" style=" width: 1050px; height:74px; margin-left: 10px; outline:1px solid rgb(255, 255, 255);">
-                    <a class="align-items-right mb-3 me-md-auto link-dark text-decoration-none p-1">
+                    <a class="align-items-right mb-3 me-md-auto link-light text-decoration-none p-1">
                       <svg style="margin-top: 3px;" class="bi me-3" width="10" height="32"><use xlink:href="#bootstrap"></use></svg>
-                        <span class="fs-4 text-white" style="margin-top: 8px;">KELAS</span>
+                        <span class="fs-4" style="margin-top: 8px;">MURID</span>
                           
-                      <button type="button" class="logbot btn btn-outline-light " style="margin-left: 808px; margin-bottom: 10px; outline:1px solid rgb(255, 255, 255);">Logout</button>
+                      <button type="button" class="logbot btn btn-outline-light " style="margin-left: 800px; margin-bottom: 10px; outline:1px solid rgb(255, 255, 255);">Logout</button>
                     </a>
                   </div>
                       
@@ -163,29 +126,27 @@
             
               {{-- button kanan --}}    
                   <div class="container d-flex justify-content-between">
-                    <div class="navbar-brand mt-2 text-white">Kelas</div>
-                    <div class="animas"></div>
-                      <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">tambah kelas</button>
+                    <div class="navbar-brand mt-2 text-white">Murid</div>
+                      <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Tambah Murid</button>
                 </div>
               </div>     
 
               {{-- dropdown --}}
               <div class="card-body mt-2">
-                <div class="btn-group d-flex">                  
+                <div class="btn-group d-flex">
                   <button class="btn btn-sm me-1 text-white" type="button" style="outline:2px solid rgb(255, 255, 255); margin-left: 15px;">
                     5
                   </button>
-                  <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split text-white" data-bs-toggle="dropdown" aria-expanded="false" style="outline:2px solid rgb(255, 255, 255);">                    
+                  <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split text-white" data-bs-toggle="dropdown" aria-expanded="false" style="outline:2px solid rgb(255, 255, 255);">
                     <span class="visually-hidden">Toggle Dropdown</span>
-                  </button>                  
+                  </button>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">CIWAWA</a></li>
                     <li><a class="dropdown-item" href="#">BABAYO</a></li>
                     <li><a class="dropdown-item" href="#">INI BAPAK BUDI</a></li>                    
-                  </ul>        
-                          
+                  </ul>                
 
-                {{-- search bar --}}                
+                {{-- search bar --}}
                 <div class="container justify-content-end" style="margin-left: 550px;">
                   <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style=" width: 150px;">
@@ -194,17 +155,18 @@
                 </div>
               </div>
                 
-              
+
 
               {{-- table isi --}}
-              <div class="card-body mt-4 text-white">                
+              <div class="card-body mt-4 text-white">
                 <table class="table text-center text-white">
                   <thead>
                     <tr>
                       <th scope="col">No</th>
-                      <th scope="col">Nama Kelas</th>
-                      <th scope="col">Jurusan</th>                      
-                      <th scope="col">Aksi</th>                      
+                      <th scope="col">NIS</th>
+                      <th scope="col">Nama Murid</th>                      
+                      <th scope="col">Detail Kelas</th>
+                      <th scope="col">Aksi</th>
                     </tr>
                   </thead>                  
                   <tbody>
@@ -213,18 +175,20 @@
                         $no = 1;
                     @endphp
                     
-                    @foreach ($kelas as $user)                    
-                    <tr>
+                    @foreach ($murids as $row)
+                    
+                    <tr class="tar">
                       <th scope="row">{{ $no++ }}</th>
-                      <td>{{ $user->nama_kelas }}</td>
-                      <td>{{ $user->jurusan }}</td>
+                      <td>{{ $row->nis }}</td>
+                      <td>{{ $row->nama_murid }}</td>                      
+                      <td>{{ $row->kelas->nama_kelas }} {{ $row->kelas->jurusan }} </td>
                       <td>
                         <button type="button" class="btn btn-primary">Lihat Data</button> 
-                        <a href="/tampildata/{{ $user->id }}" class="btn btn-primary">Edit Data</a> 
-                        <a href="/delete/{{ $user->id }}" class="btn btn-danger">Hapus Data</a> 
+                        <a href="/editmurid/{{ $row->id }}" class="btn btn-primary">Edit Data</a> 
+                        <a href="/hapus/{{ $row->id }}" class="btn btn-danger">Hapus Data</a> 
                         
                       </td>
-                    </tr>                                            
+                    </tr> 
                     @endforeach
                   </tbody>
 
@@ -245,32 +209,44 @@
           </div>
 
           {{-- modal --}}
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="dong modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Tambah Kelas</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Tambah Murid</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
-                  <form action="/insertdata" method="POST" enctype="multipart/form-data">
+                  <form action="/tambahdata" method="POST" enctype="multipart/form-data">                    
                     @csrf
-                    
+
                     <div class="mb-3">
-                      <label for="recipient-name" class="col-form-label">Nama Kelas:</label>
-                      <input type="text" name="nama_kelas" class="form-control" id="recipient-name">
+                      <label for="recipient-name" class="col-form-label">NIS:</label>
+                      <input type="text" name="nis" class="form-control" id="recipient-name">
                     </div>
 
                     <div class="mb-3">
-                      <label for="message-text" class="col-form-label">Jurusan:</label>
-                      <input type="text" name="jurusan" class="form-control" id="recipient-name">
+                      <label for="recipient-name" class="col-form-label">Nama Murid:</label>
+                      <input type="text" name="nama_murid" class="form-control" id="recipient-name">
+                    </div>                    
+                    
+                    <label class="form-label">Kelas:</label>
+                    <select class="form-select" aria-label="Default select example" name="kelas_id">
+
+                    <option selected>Kelas</option>                    
+                         @foreach ($kelas as $kls)
+                             <option value="{{ $kls->id }}">{{ $kls->nama_kelas }} {{ $kls->jurusan }}</option>
+                         @endforeach
+                    </select>
+
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">Upload</button>
-                    </div>
+                
                   </form>
                 </div>
+            </div>
 
                 </div>
               </div>

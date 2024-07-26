@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\MapelController;
+use App\Http\Controllers\MuridController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +23,25 @@ Route::post('/insertdata', [KelasController::class, 'insertdata'])->name('insert
 
 Route::get('/tampildata/{id}', [KelasController::class, 'tampildata'])->name('tampildata');
 Route::post('/updatedata/{id}', [KelasController::class, 'updatedata'])->name('updatedata');
+
+Route::get('/delete/{id}', [KelasController::class, 'delete'])->name('delete');
+
+// bagian murid
+Route::get('/murid', [MuridController::class, 'murid'])->name('murid');
+
+Route::post('/tambahdata', [MuridController::class, 'tambahdata'])->name('tambahdata');
+
+Route::get('/editmurid/{id}', [MuridController::class, 'editmurid'])->name('editmurid');
+Route::post('/updatemurid/{id}', [MuridController::class, 'updatemurid'])->name('updatemurid');
+
+Route::get('/hapus/{id}', [MuridController::class, 'hapus'])->name('hapus');
+
+// bagian mapel
+Route::get('/mapel', [MapelController::class, 'mapel'])->name('mapel');
+
+Route::post('/tambahmapel', [MapelController::class, 'tambahmapel'])->name('tambahmapel');
+
+Route::get('/editmapel/{id}', [MapelController::class, 'editmapel'])->name('editmapel');
+Route::post('/updatemapel/{id}', [MapelController::class, 'updatemapel'])->name('updatemapel');
+
+Route::get('/buang/{id}', [MapelController::class, 'buang'])->name('buang');

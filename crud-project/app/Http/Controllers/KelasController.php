@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\kelas;
+use App\Models\Murid;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -10,7 +11,8 @@ class KelasController extends Controller
 {
     public function index(){
         $kelas = Kelas::all();
-        return view("index", compact("kelas"));     
+        $murids = Murid::all();
+        return view('index', compact('kelas', 'murids'));
     }
 
     public function insertdata(Request $request){
@@ -19,8 +21,7 @@ class KelasController extends Controller
     }
 
     public function tampildata($id){
-        $kelas = Kelas::find($id);
-        // dd($kelas);
+        $kelas = Kelas::find($id);        
         return view('tampildata', compact('kelas'));
     }
 
@@ -29,5 +30,21 @@ class KelasController extends Controller
         $kelas->update($request->all());
         return redirect()->route('index')->with('success', 'Data Berhasil Anda Update');
     }
+
+    public function delete($id){
+        $kelas = Kelas::find($id);
+        $kelas->delete();
+        return redirect()->route('index')->with('success', 'Data Berhasil Anda Delete');
+    }
+
+    public function murid(){
+        $kelas = Kelas::all();
+        return view('murid', compact('kelas'));
+    }
+
+    public function tampildatamurid(){
+        $murid = Kelas::all();
+        return view("tampildatamurid",compact("murid"));
+    }    
     
 }
