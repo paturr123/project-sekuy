@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class MuridController extends Controller
 {
-    public function murid(){
+    public function murid(Request $request){
+        $search = $request->input('search');
         $murids = Murid::all();
         $kelas = Kelas::all();
+
+        $murids = Murid::query()
+                ->where('nis','like','%'.$search.'%')
+                ->orWhere('nama_murid','like','%'.$search.'%')
+                ->orWhere('kelas_id','like','%'.$search.'%')
+                ->get();
         return view("murid",compact('murids', 'kelas'));
     }
 

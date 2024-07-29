@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class MapelController extends Controller
 {
-    public function mapel(){
+    public function mapel(Request $request){
+        $search = $request->input('search');
         $mapels = Mapel::all();        
         $kelas = kelas::all();
+
+        $mapels = Mapel::query()
+        ->where('mata_pelajaran','like','%'.$search.'%')
+        ->orWhere('guru_pengajar','like','%'.$search.'%')
+        ->get();
+
         return view('mapel', compact('mapels', 'kelas'));
     }
 

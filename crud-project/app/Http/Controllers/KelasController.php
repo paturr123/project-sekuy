@@ -9,9 +9,15 @@ use Illuminate\View\View;
 
 class KelasController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        $search = $request->input('search');
         $kelas = Kelas::all();
         $murids = Murid::all();
+
+        $kelas = Kelas::query()
+                ->where('nama_kelas','like','%'.$search.'%')
+                ->orWhere('jurusan','like','%'.$search.'%')
+                ->get();
         return view('index', compact('kelas', 'murids'));
     }
 

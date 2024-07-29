@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <head>
           <title>CRUD</title>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">          
           <style>
-            .kiribar{
-              height: 100%;       
+            .kiribar{                   
               margin-left: 0%;                        
               z-index: 1;
               display: block;
               animation-delay: 1s;                        
-            }       
+            }
+
+            .kiri{
+              box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+              height: 634px;
+            }
+
+            .navdar{
+              box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            }
 
             .tumbul{
               width: 220px;
@@ -71,22 +80,65 @@
               .utama{
                 margin-top: 80px;
               }
+
+              .wrapper .button{
+                display: inline-block;
+                height: 60px;
+                width: 60px;
+                float: left;
+                margin: 0 5px;
+                overflow: hidden;
+                background: linear-gradient(to right, #8d68c5, #e34494);
+                border-radius: 50px;
+                transition: all 0.3s ease-out;             
+              }
+
+              .wrapper .button:hover{
+                width: 200px;
+              }
+              
+              .wrapper .button .icon{
+                display: inline-block;
+                width: 60px;
+                height: 60px;
+                text-align: center;
+                border-radius: 50px;
+                box-sizing: border-box;
+                line-height: 60px;
+
+              }
+
+              .wrapper .button .icon i{
+                font-size: 25px;
+                line-height: 60px;
+
+              }
+              
+              .wrapper .button span{
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 60px;
+                margin-left: 10px;
+              }
           </style>
 </head>
 <body class="bg-secondary">
 
           {{-- columns --}}
-          <div class="kiribar container" style="margin-right: 183px;">
+          <div class="kiribar">
               <div class="row align-items-start">
                 <div class="col-2">
                         
                   {{-- side bar --}}                
-                  <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark" style="width: 290px; outline:1px solid rgb(255, 255, 255);">
-                  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                    <svg class="bi me-5" width="10" height="32"><use xlink:href="#bootstrap"></use></svg>
-                    <span class="fs-3 fw-bold text-white mt-5">|MENU</span>
-                    <span class="utama fs-3 fw-bold text-primary">  UTAMA|</span>
-                  </a>                  
+                  <div class="kiri flex-column p-3 bg-dark" style="width: 290px;">
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">                   
+                      <div class="wrapper">
+                        <div class="button mb-5">
+                          <div class="icon"><i class="fas fa-home"></i></div>
+                          <span class="link-light">HOME</span>
+                        </div>
+                      </div>
+                    </a>                 
 
                   <hr class="bg-white mt-10" style="height: 3px;">                                
                   <ul class="nav flex-column mb-auto">
@@ -101,7 +153,6 @@
                   <li class="tumbul nav-item mt-4" style="margin-left: 20px; outline:1px solid rgb(255, 255, 255); border-radius: 1rem;">
                     <a href="/murid" class="nav-link link-light">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-                      <i class="fas fa-cloud"></i>
                         Murid
                     </a>
                   </li>
@@ -114,8 +165,7 @@
                   </li>                    
                      
                   {{-- bottom --}}
-                  <hr class="bg-white" style="height: 18px;">
-                  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+                  <hr class="bg-white" style="height: 18px;">                  
 
                   <div class="dropdown">
                     <a href="#" class="d-flex align-items-center link-light text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -138,10 +188,10 @@
                   </div>
                   
 
-                  <div class="col-8" style="margin-left: 91px;">
+                  <div class="col-8" style="margin-left: 59px;">
 
                   {{-- navbar --}}                  
-                  <div class="flex-column flex-shrink-0 p-3 bg-dark" style=" width: 1050px; height:74px; margin-left: 10px; outline:1px solid rgb(255, 255, 255);">
+                  <div class="navdar flex-column p-3 bg-dark" style=" width: 1050px; height:74px;">
                     <a class="align-items-right mb-3 me-md-auto link-dark text-decoration-none p-1">
                       <svg style="margin-top: 3px;" class="bi me-3" width="10" height="32"><use xlink:href="#bootstrap"></use></svg>
                         <span class="fs-4 text-white" style="margin-top: 8px;">KELAS</span>
@@ -188,7 +238,7 @@
                 {{-- search bar --}}                
                 <div class="container justify-content-end" style="margin-left: 550px;">
                   <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style=" width: 150px;">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style=" width: 150px;" name="search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                   </form>
                 </div>
