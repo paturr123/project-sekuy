@@ -128,7 +128,7 @@
                 <div class="col-2">                                    
                         
                   {{-- side bar --}}
-                  <div class="kiri flex-column p-3 bg-dark" style="width: 290px;">
+                  <div class="kiri flex-column p-3 bg-dark fixed-top" style="width: 290px;">
                   <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">                   
                     <div class="wrapper">
                       <div class="button mb-5">
@@ -151,6 +151,13 @@
                     <a href="/murid" class="butkir nav-link link-light">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
                         Murid                        
+                    </a>
+                  </li>
+
+                  <li class="tumbul nav-item mt-4" style="margin-left: 20px; outline:1px solid rgb(255, 255, 255); border-radius: 1rem;">
+                    <a href="/guru" class="butkir nav-link link-light">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                        Guru                        
                     </a>
                   </li>
 
@@ -188,10 +195,10 @@
                   
                   
 
-                  <div class="col-8" style="margin-left: 59px;">
+                  <div class="col-8" style="margin-left: 59px; margin-top: 70px;">
 
                   {{-- navbar --}}                  
-                  <div class="navdar flex-column flex-shrink-0 p-3 bg-dark" style=" width: 1050px; height:74px;">
+                  <div class="navdar flex-column flex-shrink-0 p-3 bg-dark fixed-top" style=" width: 1050px; height:74px; margin-left: 289px;">
                     <a class="align-items-right mb-3 me-md-auto link-light text-decoration-none p-1">
                       <svg style="margin-top: 3px;" class="bi me-3" width="10" height="32"><use xlink:href="#bootstrap"></use></svg>
                         <span class="fs-4" style="margin-top: 8px;">MATA PELAJARAN</span>
@@ -252,7 +259,7 @@
                     <tr>
                       <th scope="col">No</th>
                       <th scope="col">Mata Pelajaran</th>
-                      <th scope="col">Guru Pengajar</th>                                            
+                      <th scope="col">Keterangan</th>                                            
                       <th scope="col">Aksi</th>
                     </tr>
                   </thead>                  
@@ -266,7 +273,7 @@
                     <tr class="tar">
                       <th scope="row">{{ $no++ }}</th>
                       <td>{{ $user->mata_pelajaran }}</td>
-                      <td>{{ $user->guru_pengajar }}</td>
+                      <td>{{ $user->keterangan }}</td>
                       <td>
                         <button type="button" class="btn btn-primary">Lihat Data</button> 
                         <a href="/editmapel/{{ $user->id }}" class="btn btn-primary">Edit Data</a> 
@@ -311,8 +318,8 @@
                     </div>
 
                     <div class="mb-3">
-                      <label for="recipient-name" class="col-form-label">Guru Pengajar:</label>
-                      <input type="text" name="guru_pengajar" class="form-control" id="recipient-name">
+                      <label for="recipient-name" class="col-form-label">Keterangan:</label>
+                      <input type="text" name="keterangan" class="form-control" id="recipient-name">
                     </div>                                                            
 
                       <div class="modal-footer">

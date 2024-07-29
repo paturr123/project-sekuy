@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MuridController;
@@ -45,3 +46,13 @@ Route::get('/editmapel/{id}', [MapelController::class, 'editmapel'])->name('edit
 Route::post('/updatemapel/{id}', [MapelController::class, 'updatemapel'])->name('updatemapel');
 
 Route::get('/buang/{id}', [MapelController::class, 'buang'])->name('buang');
+
+// bagian guru
+Route::get('/guru', [GuruController::class, 'guru'])->name('guru');
+
+Route::post('/tambahguru', [GuruController::class, 'tambahguru'])->name('tambahguru');
+Route::get('/editguru/{id}', [GuruController::class, 'editguru'])->name('editguru');
+
+Route::post('/updateguru/{id}', [GuruController::class, 'updateguru'])->name('updateguru');
+
+Route::get('/hapusguru/{id}', [GuruController::class, 'hapusguru'])->name('hapusguru');

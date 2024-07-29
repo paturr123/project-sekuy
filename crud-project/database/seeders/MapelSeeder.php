@@ -15,7 +15,7 @@ class MapelSeeder extends Seeder
     {
         DB::table('mapels')->insert([
             'mata_pelajaran' => 'Matematika',
-            'guru_pengajar' => 'Bu Ema',            
+            'keterangan' => 'Belajar Algoritma',            
         ]);
     }
 }

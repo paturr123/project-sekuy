@@ -90,7 +90,7 @@
                 <div class="col-2">
                         
                   {{-- side bar --}}
-                  <div class="kiri flex-column p-3 bg-dark" style="width: 290px;">
+                  <div class="kiri flex-column p-3 bg-dark fixed-top" style="width: 290px;">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">                   
                       <div class="wrapper">
                         <div class="button mb-5">
@@ -114,6 +114,13 @@
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
                         Murid
                         <div class="spinner-grow spinner-grow-sm text-danger"></div>
+                    </a>
+                  </li>
+
+                  <li class="tumbul nav-item mt-4" style="margin-left: 20px; outline:1px solid rgb(255, 255, 255); border-radius: 1rem;">
+                    <a href="/guru" class="butkir nav-link link-light">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                        Guru                        
                     </a>
                   </li>
 
@@ -149,10 +156,10 @@
                   </div>
                   
 
-                  <div class="col-8" style="margin-left: 59px;">
+                  <div class="col-8" style="margin-left: 59px; margin-top: 70px;">
 
                   {{-- navbar --}}                  
-                  <div class="navdar flex-column flex-shrink-0 p-3 bg-dark" style=" width: 1050px; height:74px;">
+                  <div class="navdar flex-column flex-shrink-0 p-3 bg-dark fixed-top" style=" width: 1050px; height:74px; margin-left: 289px;">
                     <a class="align-items-right mb-3 me-md-auto link-light text-decoration-none p-1">
                       <svg style="margin-top: 3px;" class="bi me-3" width="10" height="32"><use xlink:href="#bootstrap"></use></svg>
                         <span class="fs-4" style="margin-top: 8px;">MURID</span>

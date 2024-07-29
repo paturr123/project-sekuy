@@ -543,7 +543,7 @@
                   </div>                         
 
                   <label class="form-label">Kelas:</label>
-                    <select class="form-select" aria-label="Default select example" name="kelas_id">
+                    <select class="form-select" aria-label="Default select example">
 
                     <option selected>Kelas</option>                    
                          @foreach ($kelas as $kls)

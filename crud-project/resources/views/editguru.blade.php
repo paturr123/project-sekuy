@@ -524,16 +524,27 @@
            <div class="card">
                <div class="card-body">
 
-                <form action="/updatemapel/{{ $mapels->id }}" method="POST" enctype="multipart/form-data">
+                <form action="/updateguru/{{ $gurus->id }}" method="POST" enctype="multipart/form-data">
                   @csrf
                                     
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Mata Pelajaran</label>
-                    <input type="text" name="mata_pelajaran" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $mapels->mata_pelajaran }}">                    
+                    <label for="exampleInputEmail1" class="form-label">Nama:</label>
+                    <input type="text" name="nama" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $gurus->nama }}">                    
                   </div>
+
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Keterangan:</label>
-                    <input type="text" name="keterangan" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $mapels->keterangan }}">                    
+                    <label for="exampleInputEmail1" class="form-label">Nomor Induk:</label>
+                    <input type="text" name="nomor_induk" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $gurus->nomor_induk }}">                    
+                  </div>   
+
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Alamat:</label>
+                    <input type="text" name="alamat" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $gurus->alamat }}">                    
+                  </div> 
+
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Nomor Telephone:</label>
+                    <input type="text" name="nomor_telephone" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ $gurus->nomor_telephone }}">                    
                   </div>                                                          
                     
                   <button type="submit" class="btn btn-primary">Upload</button>
