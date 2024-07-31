@@ -14,9 +14,46 @@ class KelasSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('kelas')->insert([
-            'nama_kelas' => 'Kelas 10',
+        DB::table('kelas')->insert
+        ([
+            'nama_kelas' => '10',
             'jurusan'    => 'RPL',
+        ]);
+        ([
+            'nama_kelas' => '10',
+            'jurusan'    => 'TKJ',
+        ]);
+        ([
+            'nama_kelas' => '10',
+            'jurusan'    => 'TKR',
+        ]);
+        ([
+            'nama_kelas' => '12',
+            'jurusan'    => 'RPL',
+        ]);
+        ([
+            'nama_kelas' => '10',
+            'jurusan'    => 'TITL',
+        ]);
+        ([
+            'nama_kelas' => '11',
+            'jurusan'    => 'TKJ',
+        ]);
+        ([
+            'nama_kelas' => '12',
+            'jurusan'    => 'DKV',
+        ]);
+        ([
+            'nama_kelas' => '12',
+            'jurusan'    => 'TKR',
+        ]);
+        ([
+            'nama_kelas' => '12',
+            'jurusan'    => 'TP',
+        ]);
+        ([
+            'nama_kelas' => '12',
+            'jurusan'    => 'TPL',
         ]);
     }
 }

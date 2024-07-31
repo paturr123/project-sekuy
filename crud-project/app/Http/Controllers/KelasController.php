@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\kelas;
-use App\Models\Murid;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -11,14 +10,13 @@ class KelasController extends Controller
 {
     public function index(Request $request){
         $search = $request->input('search');
-        $kelas = Kelas::all();
-        $murids = Murid::all();
+        $kelas = Kelas::all();        
 
         $kelas = Kelas::query()
                 ->where('nama_kelas','like','%'.$search.'%')
                 ->orWhere('jurusan','like','%'.$search.'%')
                 ->get();
-        return view('index', compact('kelas', 'murids'));
+        return view('index', compact('kelas'));
     }
 
     public function insertdata(Request $request){
@@ -41,16 +39,6 @@ class KelasController extends Controller
         $kelas = Kelas::find($id);
         $kelas->delete();
         return redirect()->route('index')->with('success', 'Data Berhasil Anda Delete');
-    }
-
-    public function murid(){
-        $kelas = Kelas::all();
-        return view('murid', compact('kelas'));
-    }
-
-    public function tampildatamurid(){
-        $murid = Kelas::all();
-        return view("tampildatamurid",compact("murid"));
-    }    
+    }  
     
 }
