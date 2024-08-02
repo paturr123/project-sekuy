@@ -56,3 +56,6 @@ Route::get('/editguru/{id}', [GuruController::class, 'editguru'])->name('editgur
 Route::post('/updateguru/{id}', [GuruController::class, 'updateguru'])->name('updateguru');
 
 Route::get('/hapusguru/{id}', [GuruController::class, 'hapusguru'])->name('hapusguru');
+
+// AJAX Kelas
+
