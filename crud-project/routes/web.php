@@ -58,4 +58,4 @@ Route::post('/updateguru/{id}', [GuruController::class, 'updateguru'])->name('up
 Route::get('/hapusguru/{id}', [GuruController::class, 'hapusguru'])->name('hapusguru');
 
 // AJAX Kelas
-
+Route::post('/kelasajax', [KelasController::class, 'storeAjax'])->name('kelasajax.store');

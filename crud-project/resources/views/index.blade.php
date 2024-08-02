@@ -235,7 +235,7 @@
                       <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">tambah kelas</button>
 
                       {{-- button tambah ajax --}}
-                      <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-toggle="modal" data-bs-target="#modal-kelas" data-bs-whatever="@mdo" id="btn-tambah-ajax">tambah kelas Ajax</button>
+                      <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-toggle="modal" data-bs-target="#modal-tambah-kelas" data-bs-whatever="@mdo" id="btn-tambah-ajax">tambah kelas Ajax</button>
                 </div>
               </div>     
 
@@ -278,7 +278,7 @@
                       <th scope="col">Aksi</th>                      
                     </tr>
                   </thead>                  
-                  <tbody>
+                  <tbody id="table-kelas">
 
                     @php
                         $no = 1;
@@ -351,7 +351,7 @@
 
           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          @include('components.tambah-kelas')
 </body>
 
   <script>
