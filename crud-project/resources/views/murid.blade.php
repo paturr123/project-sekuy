@@ -3,6 +3,10 @@
           <title>CRUD</title>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+          <meta name="csrf-token" content="{{ csrf_token() }}">
+          
           <style>
             .kiribar{              
               margin-left: 0%;                        
@@ -81,6 +85,11 @@
                 margin-left: 10px;
               }
           </style>
+
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          
 </head>
 <body class="bg-secondary">
 
@@ -183,6 +192,10 @@
                   <div class="container d-flex justify-content-between">
                     <div class="navbar-brand mt-2 text-white">Murid</div>
                       <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Tambah Murid</button>
+
+                      {{-- button tambah AJAX --}}
+                      <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-toggle="modal" data-bs-target="#modal-tambah-murid" data-bs-whatever="@mdo" id="btn-tambah-ajax">Tambah Murid Ajax</button>
+                      
                 </div>
               </div>     
 
@@ -224,7 +237,7 @@
                       <th scope="col">Aksi</th>
                     </tr>
                   </thead>                  
-                  <tbody>
+                  <tbody id="table-murid">
 
                     @php
                         $no = 1;
@@ -238,7 +251,8 @@
                       <td>{{ $row->nama_murid }}</td>                      
                       <td>{{ $row->kelas->nama_kelas }} {{ $row->kelas->jurusan }} </td>
                       <td>
-                        <button type="button" class="btn btn-primary">Lihat Data</button> 
+                        <button class="btn btn-primary btn-sm" type="submit" id="btn-edit" data-id="{{ $row->id }}">Edit Ajax</button>
+                        <button class="btn btn-danger btn-sm delete" data-id="{{ $row->id }}">Hapus Data Ajax</button>
                         <a href="/editmurid/{{ $row->id }}" class="btn btn-primary">Edit Data</a> 
                         <a href="/hapus/{{ $row->id }}" class="btn btn-danger delete">Hapus Data</a> 
                         
@@ -308,36 +322,153 @@
             </div>
           </div>
 
-          
-          
+          {{-- modal edit --}}
+          <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editModalLabel">Edit Murid</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="editForm">
+                    @csrf
+                    <input type="hidden" name="id" id="edit-id">
+                    <div class="mb-3">
+                      <label for="edit-nis" class="col-form-label">NIS:</label>
+                      <input type="text" name="nis" class="form-control" id="edit-nis">
+                    </div>
+                    <div class="mb-3">
+                      <label for="edit-nama_murid" class="col-form-label">Nama Murid:</label>
+                      <input type="text" name="nama_murid" class="form-control" id="edit-nama_murid">
+                    </div>
+                    <label class="form-label">Kelas:</label>
+                    <select class="form-select" name="kelas_id" id="edit-kelas_id">
+                      <option selected>Kelas</option>
+                      @foreach ($kelas as $kls)
+                        <option value="{{ $kls->id }}">{{ $kls->nama_kelas }} {{ $kls->jurusan }}</option>
+                      @endforeach
+                    </select>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- penutup modal edit --}}
+
+          {{-- script edit --}}
+          <script>
+            $(document).ready(function() {
+              // Handle Edit button click
+              $(document).on('click', '#btn-edit', function() {
+                var userId = $(this).data('id');
                 
-
-
-                   
-
+                // Fetch user data
+                $.ajax({
+                  url: '/api/murid/' + userId,
+                  method: 'GET',
+                  success: function(response) {
+                    $('#edit-id').val(response.id);
+                    $('#edit-nis').val(response.nis);
+                    $('#edit-nama_murid').val(response.nama_murid);
+                    $('#edit-kelas_id').val(response.kelas_id);
+                    $('#editModal').modal('show');
+                  }
+                });
+              });
           
+              // Handle form submission
+              $('#editForm').on('submit', function(event) {
+                event.preventDefault();
+                
+                var formData = $(this).serialize();
+                var userId = $('#edit-id').val();
+                
+                // Update user data
+                $.ajax({
+                  url: '/api/murid/' + userId,
+                  method: 'PUT',
+                  data: formData,
+                  success: function(response) {
+                    $('#editModal').modal('hide');
+                    
+                    // Update table row with new data
+                    $('#table-murid').find('tr').each(function() {
+                      var id = $(this).find('button[data-id]').data('id');
+                      if (id == response.id) {
+                        $(this).find('td:nth-child(2)').text(response.nis);
+                        $(this).find('td:nth-child(3)').text(response.nama_murid);
+                        $(this).find('td:nth-child(4)').text(response.kelas.kelas + ' ' + response.kelas.jurusan);
+                      }
+                    });
           
-                    
-                    
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Data updated successfully',
+                      showConfirmButton: false,
+                      timer: 1500
+                    });
+                  }
+                });
+              });
+            });
+          </script>
+          {{-- penutup script edit --}}
 
-
-
-
-
-
-
-
+          {{-- script delete --}}
+          <script>
+            $(document).ready(function() {
+              // Handle Delete button click
+              $(document).on('click', '.delete', function() {
+                var id = $(this).data('id');
+                var row = $(this).closest('tr'); // Get the closest table row
+            
+                Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.ajax({
+                      url: '/api/murid/' + id,
+                      type: 'DELETE',
+                      data: {
+                        _token: '{{ csrf_token() }}' // Include CSRF token
+                      },
+                      success: function(response) {
+                        Swal.fire(
+                          'Deleted!',
+                          'Your file has been deleted.',
+                          'success'
+                        ).then(() => {
+                          row.remove(); // Remove the table row from the DOM
+                        });
+                      },
+                      error: function(response) {
+                        Swal.fire(
+                          'Error!',
+                          'Something went wrong.',
+                          'error'
+                        );
+                      }
+                    });
+                  }
+                });
+              });
+            });
+            </script>
+            {{-- penutup script delete --}}
 
           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-          <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-          integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-          crossorigin="anonymous"></script>
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+          @include('components.tambah-murid')
 </body>
-
-  <script>
-
-  </script>
-
 </html>

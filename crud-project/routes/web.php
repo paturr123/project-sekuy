@@ -5,6 +5,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MuridController;
+use Database\Seeders\GuruSeeder;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,3 +60,34 @@ Route::get('/hapusguru/{id}', [GuruController::class, 'hapusguru'])->name('hapus
 
 // AJAX Kelas
 Route::post('/kelasajax', [KelasController::class, 'storeAjax'])->name('kelasajax.store');
+
+Route::get('/kelasajax/{id}/edit', [KelasController::class, 'edit']);
+Route::put('/kelasajax/{id}', [KelasController::class, 'update']);
+
+Route::delete('/kelasajax/{id}', [KelasController::class, 'destroy']);
+
+// AJAX Murid
+Route::post('/muridajax', [MuridController::class, 'storeAjax'])->name('muridajax.store');
+
+Route::get('/api/murid/{id}', [MuridController::class, 'show']);
+Route::put('/api/murid/{id}', [MuridController::class, 'update']);
+
+Route::delete('/api/murid/{id}', [MuridController::class, 'destroy']);
+
+// AJAX Mapel
+Route::post('/mapelajax', [MapelController::class, 'storeAjax'])->name('mapelajax.store');
+
+Route::get('/mapel/{id}/edit', [MapelController::class, 'edit']);
+Route::put('/mapel/{id}', [MapelController::class, 'update']);
+
+Route::delete('/mapel/{id}', [MapelController::class, 'destroy']);
+
+
+// AJAX Guru
+Route::post('/guruajax', [GuruController::class, 'storeAjax'])->name('guruajax.store');
+
+Route::get('/guruajax/{id}/edit', [GuruController::class, 'edit']);
+Route::put('/guruajax/{id}', [GuruController::class, 'update']);
+
+Route::delete('/guruajax/{id}', [GuruController::class, 'destroy']);
+

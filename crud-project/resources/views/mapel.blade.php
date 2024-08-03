@@ -2,7 +2,11 @@
 <head>
           <title>CRUD</title>          
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">          
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+          <meta name="csrf-token" content="{{ csrf_token() }}">
+
           <style>
             .kiribar{
               height: 100%;       
@@ -119,6 +123,12 @@
               }
               
           </style>
+
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body class="bg-secondary">
 
@@ -223,6 +233,11 @@
                     <div class="navbar-brand mt-2 text-white">Mata Pelajaran</div>
                     <div class="animas"></div>
                       <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Tambah Mapel</button>
+                      
+                      {{-- button tambah ajax --}}
+                      <button class="btn btn-outline-light d-flex justify-content-end mt-2" type="submit" style="outline:1px solid rgb(255, 255, 255); border-radius: 0.8rem;" data-bs-target="#modal-tambah-mapel" id="btn-tambah-ajax">Tambah Mapel Ajax</button>
+                      
+
                 </div>
               </div>     
 
@@ -263,21 +278,17 @@
                       <th scope="col">Aksi</th>
                     </tr>
                   </thead>                  
-                  <tbody>
-
-                    @php
-                        $no = 1;
-                    @endphp
-
+                  <tbody id="table-mapel">
                     @foreach ($mapels as $user)
-                    <tr class="tar">
-                      <th scope="row">{{ $no++ }}</th>
+                    <tr>
+                      <th scope="row">{{ $loop->iteration }}</th>
                       <td>{{ $user->mata_pelajaran }}</td>
                       <td>{{ $user->keterangan }}</td>
-                      <td>
-                        <button type="button" class="btn btn-primary">Lihat Data</button> 
-                        <a href="/editmapel/{{ $user->id }}" class="btn btn-primary">Edit Data</a> 
-                        <a href="/buang/{{ $user->id }}" class="btn btn-danger delete">Hapus Data</a> 
+                      <td class="text-center">
+                        <button class="btn btn-primary btn-sm" type="submit" id="btn-edit" data-id="{{ $user->id }}">Edit Ajax</button>
+                        <button class="btn btn-danger btn-sm delete" data-id="{{ $user->id }}">Hapus Data Ajax</button>
+                        <a href="/editmapel/{{ $user->id }}" class="btn btn-primary btn-sm">Edit Data</a> 
+                        <a href="/buang/{{ $user->id }}" class="btn btn-danger delete btn-sm">Hapus Data</a> 
                         
                       </td>
                     </tr> 
@@ -334,36 +345,143 @@
             </div>
           </div>
 
+          {{-- penutup modal --}}
           
+          <!-- Edit Mapel Modal -->
+          <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="modal-edit-label" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modal-edit-label">Edit Mapel</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="edit-form">
+                    @csrf
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" id="edit-id" name="id">
+                    <div class="mb-3">
+                      <label for="edit-mata-pelajaran" class="col-form-label">Mata Pelajaran:</label>
+                      <input type="text" name="mata_pelajaran" class="form-control" id="edit-mata-pelajaran">
+                    </div>
+                    <div class="mb-3">
+                      <label for="edit-keterangan" class="col-form-label">Keterangan:</label>
+                      <input type="text" name="keterangan" class="form-control" id="edit-keterangan">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- penutup modal edit --}}
+
+          {{-- script edit --}}
+          <script>
+            $(document).ready(function() {
+              // Handle Edit button click
+              $(document).on('click', '#btn-edit', function() {
+                var id = $(this).data('id');
+                $.get('/mapel/' + id + '/edit', function(data) {
+                  $('#edit-id').val(data.id);
+                  $('#edit-mata-pelajaran').val(data.mata_pelajaran);
+                  $('#edit-keterangan').val(data.keterangan);
+                  $('#modal-edit').modal('show');
+                });
+              });
+            
+              // Handle form submission
+              $('#edit-form').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+            
+                var id = $('#edit-id').val();
+                var url = '/mapel/' + id;
+            
+                $.ajax({
+                  url: url,
+                  type: 'PUT',
+                  data: $(this).serialize(),
+                  success: function(response) {
+                    $('#modal-edit').modal('hide');
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Updated!',
+                      text: response.message
+                    }).then(() => {
+                      // Find the table row and update its content
+                      var row = $('tr').find(`[data-id="${id}"]`).closest('tr');
+                      row.find('td:nth-child(2)').text($('#edit-mata-pelajaran').val());
+                      row.find('td:nth-child(3)').text($('#edit-keterangan').val());
+                    });
+                  },
+                  error: function(response) {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: response.responseJSON.message
+                    });
+                  }
+                });
+              });
+            });
+            </script>
+            {{-- penutup script edit --}}
+
+            {{-- script delete --}}
+            <script>
+              $(document).ready(function() {
+                // Handle Delete button click
+                $(document).on('click', '.delete', function() {
+                  var id = $(this).data('id');
+                  var row = $(this).closest('tr'); // Get the closest table row
+              
+                  Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      $.ajax({
+                        url: '/mapel/' + id,
+                        type: 'DELETE',
+                        data: {
+                          _token: '{{ csrf_token() }}' // Include CSRF token
+                        },
+                        success: function(response) {
+                          Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                          ).then(() => {
+                            row.remove(); // Remove the table row from the DOM
+                          });
+                        },
+                        error: function(response) {
+                          Swal.fire(
+                            'Error!',
+                            'Something went wrong.',
+                            'error'
+                          );
+                        }
+                      });
+                    }
+                  });
+                });
+              });
+              </script>
+              {{-- penutup script delete --}}
+
           
-          
-
-
-                   
-
-          
-          
-                    
-                    
-
-
-
-
-
-
-
-
-
           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-          <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-          integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-          crossorigin="anonymous"></script>
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>  
-
-  <script>
-    
-  </script>
-
+          @include('components.tambah-mapel')
+          
+</body>
 </html>

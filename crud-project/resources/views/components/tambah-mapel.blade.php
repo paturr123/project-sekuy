@@ -1,5 +1,5 @@
-<!-- Modal Kelas-->
-<div class="modal fade" id="modal-tambah-kelas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Mapel-->
+<div class="modal fade" id="modal-tambah-mapel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <div class="modal-header">
@@ -11,14 +11,14 @@
           <div class="modal-body">
 
               <div class="form-group">
-                  <label for="name" class="control-label">Nama Kelas</label>
-                  <input type="text" class="form-control" id="idkelas">
+                  <label for="name" class="control-label">Mata Pelajaran</label>
+                  <input type="text" class="form-control" id="idmapel">
                   <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-title"></div>
               </div>
 
               <div class="form-group">
-                  <label for="name" class="control-label">Jurusan</label>
-                  <input type="text" class="form-control" id="idjurusan">
+                  <label for="name" class="control-label">Keterangan</label>
+                  <input type="text" class="form-control" id="idketerangan">
                   <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-content"></div>
               </div>
 
@@ -35,7 +35,7 @@
   //button create post event
   $('body').on('click', '#btn-tambah-ajax', function () {
      // Global counter for row numbers
-     let rowCounter = 4;
+     let rowCounter = 5;
     
     // Function to update row numbers
     function updateRowNumbers() {
@@ -49,13 +49,13 @@
     updateRowNumbers();
 
     // Update row numbers when a row is added or removed
-    $('#table-kelas').on('DOMSubtreeModified', function() {
+    $('#table-mapel').on('DOMSubtreeModified', function() {
         updateRowNumbers();
     })
 
 
       //open modal
-      $('#modal-tambah-kelas').modal('show');
+      $('#modal-tambah-mapel').modal('show');
   });
 
   //action create post
@@ -63,19 +63,19 @@
       e.preventDefault();
 
       //define variable
-      let nama_kelas   = $('#idkelas').val();
-      let jurusan = $('#idjurusan').val();
+      let mata_pelajaran   = $('#idmapel').val();
+      let keterangan = $('#idketerangan').val();
       let token   = $("meta[name='csrf-token']").attr("content");
       
       //ajax
       $.ajax({
 
-          url: `/kelasajax`,
+          url: `/mapelajax`,
           type: "POST",
           cache: false,
           data: {
-              "nama_kelas": nama_kelas,
-              "jurusan": jurusan,
+              "mata_pelajaran": mata_pelajaran,
+              "keterangan": keterangan,
               "_token": token
           },
           success:function(response){
@@ -93,50 +93,47 @@
               let post = `
                   <tr id="index_${response.data.id}" data-row="${++rowCounter}">
                     <th scope="row">${rowCounter}</th>
-                      <td>${response.data.nama_kelas}</td>
-                      <td>${response.data.jurusan}</td>
-                      <td>${response.data.jumlah_siswa}</td>
+                      <td>${response.data.mata_pelajaran}</td>
+                      <td>${response.data.keterangan}</td>
                       <td class="text-center">
-                          <button class="btn btn-primary btn-sm" type="submit" id="btn-edit" data-id="{{ $user->id }}">Edit Ajax</button>
-                        <button class="btn btn-danger btn-sm delete" data-id="{{ $user->id }}">Hapus Data Ajax</button>
-                        <a href="/tampildata/{{ $user->id }}" class="btn btn-primary">Edit Data</a> 
-                        <a href="/delete/{{ $user->id }}" class="btn btn-danger delete">Hapus Data</a> 
+                          <a href="javascript:void(0)" id="btn-edit-post" data-id="${response.data.id}" class="btn btn-primary btn-sm">EDIT</a>
+                          <a href="javascript:void(0)" id="btn-delete-post" data-id="${response.data.id}" class="btn btn-danger btn-sm">DELETE</a>
                       </td>
                   </tr>
               `;
               
               //append to table
-              $('#table-kelas').append(post);
+              $('#table-mapel').append(post);
               
               //clear form
-              $('#idkelas').val('');
-              $('#idjurusan').val('');
+              $('#idmapel').val('');
+              $('#idketerangan').val('');
 
               //close modal
-              $('#modal-tambah-kelas').modal('hide');
+              $('#modal-tambah-mapel').modal('hide');
               
 
           },
           error:function(error){
               
-              if(error.responseJSON.nama_kelas[0]) {
+              if(error.responseJSON.mata_pelajaran[0]) {
 
                   //show alert
                   $('#alert-title').removeClass('d-none');
                   $('#alert-title').addClass('d-block');
 
                   //add message to alert
-                  $('#alert-title').html(error.responseJSON.nama_kelas[0]);
+                  $('#alert-title').html(error.responseJSON.mata_pelajaran[0]);
               } 
 
-              if(error.responseJSON.jurusan[0]) {
+              if(error.responseJSON.keterangan[0]) {
 
                   //show alert
                   $('#alert-content').removeClass('d-none');
                   $('#alert-content').addClass('d-block');
 
                   //add message to alert
-                  $('#alert-content').html(error.responseJSON.jurusan[0]);
+                  $('#alert-content').html(error.responseJSON.keterangan[0]);
               }
 
           }
@@ -146,7 +143,7 @@
   });
   // Initialize row counter on page load based on existing rows
   $(document).ready(function() {
-    rowCounter = $('#table-kelas tr').length; // Set counter based on existing rows
+    rowCounter = $('#table-mapel tr').length; // Set counter based on existing rows
     updateRowNumbers(); // Initial update of row numbers
 });
 

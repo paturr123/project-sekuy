@@ -291,7 +291,8 @@
                       <td>{{ $user->jurusan }}</td>
                       <td>{{ $user->murid->count() }}</td>
                       <td>
-                        <button type="button" class="btn btn-primary">Lihat Data</button> 
+                        <button class="btn btn-primary btn-sm" type="submit" id="btn-edit" data-id="{{ $user->id }}">Edit Ajax</button>
+                        <button class="btn btn-danger btn-sm delete" data-id="{{ $user->id }}">Hapus Data Ajax</button>
                         <a href="/tampildata/{{ $user->id }}" class="btn btn-primary">Edit Data</a> 
                         <a href="/delete/{{ $user->id }}" class="btn btn-danger delete">Hapus Data</a> 
                         
@@ -348,14 +349,141 @@
               </div>
             </div>
           </div>
+          {{-- penutup modal --}}
+
+          <!-- Edit Modal Ajax-->
+          <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="modal-edit-label" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modal-edit-label">Edit Mapel</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="edit-form">
+                    @csrf
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" id="edit-id" name="id">
+                    <div class="mb-3">
+                      <label for="edit-mata-pelajaran" class="col-form-label">Nama Kelas:</label>
+                      <input type="text" name="nama_kelas" class="form-control" id="edit-kelas">
+                    </div>
+                    <div class="mb-3">
+                      <label for="edit-keterangan" class="col-form-label">Jurusan:</label>
+                      <input type="text" name="jurusan" class="form-control" id="edit-jurusan">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- penutup edit modal Ajax --}}
+
+          {{-- script edit --}}
+          <script>
+            $(document).ready(function() {
+              // Handle Edit button click
+              $(document).on('click', '#btn-edit', function() {
+                var id = $(this).data('id');
+                $.get('/kelasajax/' + id + '/edit', function(data) {
+                  $('#edit-id').val(data.id);
+                  $('#edit-kelas').val(data.nama_kelas);
+                  $('#edit-jurusan').val(data.jurusan);
+                  $('#modal-edit').modal('show');
+                });
+              });
+            
+              // Handle form submission
+              $('#edit-form').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+            
+                var id = $('#edit-id').val();
+                var url = '/kelasajax/' + id;
+            
+                $.ajax({
+                  url: url,
+                  type: 'PUT',
+                  data: $(this).serialize(),
+                  success: function(response) {
+                    $('#modal-edit').modal('hide');
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Updated!',
+                      text: response.message
+                    }).then(() => {
+                      // Find the table row and update its content
+                      var row = $('tr').find(`[data-id="${id}"]`).closest('tr');
+                      row.find('td:nth-child(2)').text($('#edit-kelas').val());
+                      row.find('td:nth-child(3)').text($('#edit-jurusan').val());
+                    });
+                  },
+                  error: function(response) {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: response.responseJSON.message
+                    });
+                  }
+                });
+              });
+            });
+            </script>
+          {{-- penutup script edit --}}
+
+          {{-- script delete --}}
+          <script>
+            $(document).ready(function() {
+              // Handle Delete button click
+              $(document).on('click', '.delete', function() {
+                var id = $(this).data('id');
+                var row = $(this).closest('tr'); // Get the closest table row
+            
+                Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    $.ajax({
+                      url: '/kelasajax/' + id,
+                      type: 'DELETE',
+                      data: {
+                        _token: '{{ csrf_token() }}' // Include CSRF token
+                      },
+                      success: function(response) {
+                        Swal.fire(
+                          'Deleted!',
+                          'Your file has been deleted.',
+                          'success'
+                        ).then(() => {
+                          row.remove(); // Remove the table row from the DOM
+                        });
+                      },
+                      error: function(response) {
+                        Swal.fire(
+                          'Error!',
+                          'Something went wrong.',
+                          'error'
+                        );
+                      }
+                    });
+                  }
+                });
+              });
+            });
+            </script>
+            {{-- penutup script delete --}}
 
           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
           @include('components.tambah-kelas')
 </body>
-
-  <script>
-    
-  </script>
-
 </html>

@@ -81,5 +81,36 @@ class KelasController extends Controller
         // Return response
         return response()->json($response);
     }
+
+    public function edit($id)
+    {
+        $kelas = kelas::findOrFail($id);
+        return response()->json($kelas);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama_kelas' => 'required|string|max:255',
+            'jurusan' => 'required|string|max:255',
+        ]);
+
+        $kelas = Kelas::findOrFail($id);
+        $kelas->nama_kelas = $request->nama_kelas;
+        $kelas->jurusan = $request->jurusan;
+        $kelas->save();
+
+        return response()->json(['message' => 'Kelas updated successfully']);
+    }
+
+    public function destroy($id)
+    {
+        $kelas = kelas::findOrFail($id);
+        $kelas->delete();
+
+        return response()->json(['message' => 'kelas deleted successfully']);
+    }
+
+
     
 }
